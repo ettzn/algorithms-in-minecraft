@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Algorithm Encyclopedia — Minecraft Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #1a1a1a url("mcBackground.jfif") center/cover fixed;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 24px 16px 48px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ── Outer wrapper ── */
+    .wrapper {
+      width: 100%;
+      max-width: 960px;
+      background: #0a0a0a;
+      border-radius: 20px;
+      padding: 0 12px 16px;
+      box-shadow: 0 32px 80px rgba(0, 0, 0, .8);
+    }
+
+    /* ── Top nav ── */
+    .top-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      padding: 18px 24px;
+      background: #1c1c1c;
+      border-radius: 14px 14px 0 0;
+      border-bottom: 1px solid #2e2e2e;
+      margin: 0 -12px;
+    }
+
+    .top-nav a {
+      text-decoration: none;
+      font-family: 'Press Start 2P', monospace;
+      font-size: .42rem;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1.5px solid #444;
+      background: rgba(255, 255, 255, .05);
+      transition: all .2s;
+      white-space: nowrap;
+      letter-spacing: .03em;
+    }
+
+    .top-nav a:hover {
+      background: rgba(93, 148, 49, .3);
+      border-color: #5D9431;
+      color: #7aba3a;
+    }
+
+    /* ── Each algorithm section ── */
+    .algo-section {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid #2a2a2a;
+      margin-top: 12px;
+    }
+
+    /* ── HERO image area ── */
+    .hero {
+      position: relative;
+      height: 420px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .6s ease;
+    }
+
+    .hero:hover .hero-img {
+      transform: scale(1.04);
+    }
+
+    /* CSS fallback hero backgrounds */
+    .hero-bg {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      inset: 0;
+      transition: transform .6s ease;
+    }
+
+    .hero:hover .hero-bg {
+      transform: scale(1.04);
+    }
+
+    .bg1 {
+      background: linear-gradient(160deg, #0a1628 0%, #0d2b5e 40%, #1a5c8a 70%, #2196c4 100%);
+    }
+
+    .bg2 {
+      background: linear-gradient(160deg, #0a1a0a 0%, #0d3a0d 40%, #1a5c1a 70%, #2d8a1a 100%);
+    }
+
+    .bg3 {
+      background: linear-gradient(160deg, #1a0a00 0%, #3a1a00 40%, #7a3a00 70%, #c47a00 100%);
+    }
+
+    .bg4 {
+      background: linear-gradient(160deg, #1a0000 0%, #3a0000 40%, #6e0000 70%, #b00000 100%);
+    }
+
+    .bg5 {
+      background: linear-gradient(160deg, #0d0020 0%, #1a0040 40%, #3a0080 70%, #6600cc 100%);
+    }
+
+    .bg6 {
+      background: linear-gradient(160deg, #001428 0%, #002855 40%, #00408c 70%, #0055c4 100%);
+    }
+
+    /* pixel block decorations inside hero */
+    .blocks {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .block {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      opacity: .18;
+    }
+
+    .block-g {
+      background: #5C9E31;
+    }
+
+    .block-d {
+      background: #8B6914;
+    }
+
+    .block-s {
+      background: #9e9e9e;
+    }
+
+    .block-o {
+      background: #ff8800;
+    }
+
+    /* ── Hero overlay ── */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, .85) 0%, rgba(0, 0, 0, .3) 50%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 28px 32px;
+    }
+
+    .algo-num {
+      font-family: 'Press Start 2P', monospace;
+      font-size: .6rem;
+      color: rgba(255, 255, 255, .5);
+      margin-bottom: 8px;
+      letter-spacing: .15em;
+    }
+
+    .algo-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(.9rem, 2.5vw, 1.3rem);
+      color: #fff;
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, .8);
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+
+    .algo-tagline {
+      font-size: .95rem;
+      color: rgba(255, 255, 255, .75);
+      max-width: 480px;
+      line-height: 1.5;
+    }
+
+    .hero-cta {
+      position: absolute;
+      bottom: 28px;
+      right: 32px;
+      background: #5D9431;
+      color: #fff;
+      font-family: 'Press Start 2P', monospace;
+      font-size: .45rem;
+      padding: 12px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      letter-spacing: .05em;
+      transition: background .2s, transform .15s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 0 #3a5c1e, 0 6px 12px rgba(0, 0, 0, .4);
+    }
+
+    .hero-cta:hover {
+      background: #6daa3a;
+      transform: translateY(-2px);
+    }
+
+    .hero-cta:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #3a5c1e;
+    }
+
+    /* ore badge */
+    .ore-badge {
+      position: absolute;
+      top: 20px;
+      left: 24px;
+      background: rgba(0, 0, 0, .55);
+      backdrop-filter: blur(6px);
+      border: 1.5px solid rgba(255, 255, 255, .15);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: .38rem;
+      color: #fff;
+      letter-spacing: .08em;
+    }
+
+    /* ── Content area ── */
+    .algo-content {
+      background: #1c1c1c;
+      padding: 28px 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media(max-width:600px) {
+      .algo-content {
+        grid-template-columns: 1fr;
+        padding: 20px 16px;
+      }
+
+      .hero {
+        height: 280px;
+      }
+
+      .hero-overlay {
+        padding: 20px 16px;
+      }
+    }
+
+    .content-panel {
+      background: #252525;
+      border-radius: 12px;
+      border: 1px solid #333;
+      padding: 18px 20px;
+    }
+
+    .content-panel.full {
+      grid-column: 1/-1;
+    }
+
+    .panel-label {
+      font-family: 'Press Start 2P', monospace;
+      font-size: .38rem;
+      color: #666;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    /* stats row */
+    .stats-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .stat-chip {
+      background: #1c1c1c;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 8px 12px;
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .stat-chip .label {
+      font-size: .7rem;
+      color: #555;
+      margin-bottom: 3px;
+    }
+
+    .stat-chip .val {
+      font-size: 1rem;
+      color: #e0e0e0;
+    }
+
+    /* how it works */
+    .how-text {
+      font-size: .95rem;
+      color: #ccc;
+      line-height: 1.7;
+    }
+
+    /* example */
+    .example-title-row {
+      font-family: 'Press Start 2P', monospace;
+      font-size: .42rem;
+      color: #fff;
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+
+    .pb {
+      background: #2a1515;
+      border-left: 4px solid #c0392b;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+      font-size: .9rem;
+      color: #ddd;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .sb {
+      background: #152515;
+      border-left: 4px solid #27ae60;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+      font-size: .9rem;
+      color: #ddd;
+      line-height: 1.6;
+    }
+
+    .pb b {
+      color: #e74c3c;
+      font-size: .75rem;
+    }
+
+    .sb b {
+      color: #2ecc71;
+      font-size: .75rem;
+    }
+
+    /* key prop */
+    .key-prop {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #152515;
+      border: 1px solid #27ae60;
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: .85rem;
+      color: #2ecc71;
+      margin-bottom: 12px;
+    }
+
+    code {
+      font-family: 'Press Start 2P', monospace;
+      font-size: .55rem;
+      background: #111;
+      border: 1px solid #333;
+      padding: 1px 5px;
+      border-radius: 4px;
+      color: #fff;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      font-family: 'Press Start 2P', monospace;
+      font-size: .38rem;
+      color: #444;
+      padding: 24px;
+      border-top: 1px solid #2a2a2a;
+      letter-spacing: .05em;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+
+    <!-- NAV -->
+    <nav class="top-nav">
+      <a href="#algo-1">💎 Interpolation</a>
+      <a href="#algo-2">🌿 DFS</a>
+      <a href="#algo-3">🪙 BFS</a>
+      <a href="#algo-4">🔴 Merge Sort</a>
+      <a href="#algo-5">🟣 Quicksort</a>
+      <a href="#algo-6">🔵 Heapsort</a>
+    </nav>
+
+    <!-- ══════════ 1. INTERPOLATION SEARCH ══════════ -->
+    <section class="algo-section" id="algo-1">
+      <div class="hero">
+        <img class="hero-img" src="algo1.jpg" alt="Interpolation Search" />
+        <div class="ore-badge">💎 SEARCHING</div>
+        <div class="hero-overlay">
+          <div class="algo-num">ALGORITHM 01</div>
+          <h2 class="algo-title">Interpolation Search</h2>
+          <p class="algo-tagline">Estimates where the target lives — like guessing a page in a phone book.</p>
+        </div>
+
+      </div>
+      <div class="algo-content" id="algo-1-content">
+        <div class="content-panel">
+          <div class="panel-label">⚙ Analysis</div>
+          <div class="stats-row">
+            <div class="stat-chip">
+              <div class="label">Type</div>
+              <div class="val">Searching</div>
+            </div>
+            <div class="stat-chip">
+              <div class="label">Space</div>
+              <div class="val">\(O(1)\)</div>
+            </div>
+            <div class="stat-chip">
+              <div class="label">Avg Time</div>
+              <div class="val">\(O(\log \log n)\)</div>
+            </div>
+            <div class="stat-chip">
+              <div class="label">Worst Time</div>
+              <div class="val">\(O(n)\)</div>
+            </div>
+          </div>
+          <div style="margin-top:14px;" class="how-text">
+            \[ pos = low + \frac{(target - arr[low])(high - low)}{arr[high] - arr[low]} \]
+            Unlike Binary Search, it <strong>estimates</strong> position from value distribution. Best on
+            <strong>uniformly distributed</strong> data.
+          </div>
+        </div>
+        <div class="content-panel">
+          <div class="panel-label">🌍 Real-World Example</div>
+          <div class="example-title-row">📖 Finding a word in a dictionary</div>
+          <div class="pb"><b>PROBLEM</b><br />1,000-page dictionary. Find "butterfly." You skip to page ~50 because 'B'
+            is early — not page 500.</div>
+          <div class="sb"><b>SOLUTION</b><br />The algorithm interpolates a likely page from value distribution.
+            Recalculates on sub-ranges. Much faster than binary search for uniform data.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ 2. DFS ══════════ -->
+    <section class="algo-section" id="algo-2">
+      <div class="hero">
+        <img class="hero-img" src="algo2.png" alt="DFS" />
+        <div class="ore-badge">🌿 GRAPH TRAVERSAL</div>
+        <div class="hero-overlay">
+          <div class="algo-num">ALGORITHM 02</div>
+          <h2 class="algo-title">DFS — Depth-First Search</h2>
+          <p class="algo-tagline">Go deep down one path before backtracking. Stack-powered exploration.</p>
+        </div>
+
+      </div>
+      <div class="algo-content" id="algo-2-content">
+        <div class="content-panel">
+          <div class="panel-label">⚙ Analysis</div>
+          <div class="stats-row">
+            <div class="stat-chip">
+              <div class="label">Type</div>
+              <div class="val">Graph / Tree</div>
+            </div>
+            <div class="stat-chip">
+              <div class="label">Structure</div>
+              <div class="val">Stack (LIFO)</div>
+            </div>
+            <div class="stat-chip">
+              <div class="label">Time</div>
+              <div class="val">\(O(V+E)\)</div>
+            </div>
+            <div class="stat-chip">
+              <div class="label">Space</div>
+              <div class="val">\(O(V)\)</div>
+            </div>
+          </div>
+          <div style="margin-top:14px;" class="how-text">Explores as far as possible down one branch before
+            backtracking. Great for: puzzles, topological sort, cycle detection, connected components.</div>
+        </div>
+        <div class="content-panel">
+          <div class="panel-label">🌍 Real-World Example</div>
+          <div class="example-title-row">🌀 Solving a maze</div>
+          <div class="pb"><b>PROBLEM</b><br />Complex labyrinth, many dead-ends. No map. Must find exit without
+            revisiting corridors.</div>
+          <div class="sb"><b>SOLUTION</b><br />Pick a direction, go as deep as possible. Mark visited spots. Hit a
+            dead-end? Backtrack. Recursion handles this naturally — finds <em>a</em> path, not necessarily shortest.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ 3. BFS ══════════ -->
+    <section class="algo-section" id="algo-3">
+      <div class="hero">
+        <img class="hero-img" src="algo3.jpg" alt="BFS" />
+        <div class="ore-badge">🪙 GRAPH TRAVERSAL</div>
+        <div class="hero-overlay">
+          <div class="algo-num">ALGORITHM 03</div>
+          <h2 class="algo-title">BFS — Breadth-First Search</h2>
+          <p class="algo-tagline">Expand outward in layers. Guaranteed shortest path in unweighted graphs.</p>
+        </div>
+
+      </div>
+      <div class="algo-content" id="algo-3-content">
+        <div class="content-panel">
+          <div class="panel-label">⚙ Analysis</div>
+          <div class="stats-row">
+            <div class="stat-chip">
+              <div class="label">Type</div>
+              <div class="val">Graph / Tree</div>
+            </div>
+            <div class="stat-chip">
+              <div class="label">Structure</div>
+              <div class="val">Queue (FIFO)</div>
+            </div>
+            <div class="stat-chip">
+              <div class="label">Time</div>
+              <div class="val">\(O(V+E)\)</div>
+            </div>
+            <div class="stat-chip">
+              <div class="label">Space</div>
+              <div class="val">\(O(V)\)</div>
+            </div>
+          </div>
+          <div style="margin-top:14px;" class="how-text">Explores ALL neighbors at current depth before going deeper.
+            Best for: <strong>shortest path</strong> (unweighted graphs), web crawling, GPS navigation.</div>
+        </div>
+        <div class="content-panel">
+          <div class="panel-label">🌍 Real-World Example</div>
+          <div class="example-title-row">🚇 Shortest subway route</div>
+          <div class="pb"><b>PROBLEM</b><br />One Station → Another Station. Fewest stops (not shortest distance). Which
+            route?</div>
+          <div class="sb"><b>SOLUTION</b><br />BFS from Starting Station: visit all 1-stop stations first, then 2-stop,
+            etc. The moment you hit Destination Station, that's the minimum — BFS guarantees it by expanding in layers.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ 4. MERGE SORT ══════════ -->
+    <section class="algo-section" id="algo-4">
+      <div class="hero">
+        <img class="hero-img" src="algo4.jpg" alt="Merge Sort" />
+        <div class="ore-badge">🔴 SORTING</div>
+        <div class="hero-overlay">
+          <div class="algo-num">ALGORITHM 04</div>
+          <h2 class="algo-title">Merge Sort</h2>
+          <p class="algo-tagline">Divide, conquer, and merge. Stable sort with guaranteed O(n log n).</p>
+        </div>
+
+      </div>
+      <div class="algo-content" id="algo-4-content">
+        <div class="content-panel">
+          <div class="panel-label">⚙ Analysis</div>
+          <div class="key-prop">✅ STABLE — preserves order of equal elements</div>
+          <div class="stats-row">
+            <div class="stat-chip">
+              <div class="label">Type</div>
+              <div class="val">Sorting</div>
+            </div>
+            <div class="stat-chip">
+              <div class="label">Space</div>
+              <div class="val">\(O(n)\)</div>
+            </div>
+            <div class="stat-chip" style="flex:2">
+              <div class="label">Time (all cases)</div>
+              <div class="val">\(O(n \log n)\)</div>
+            </div>
+          </div>
+          <div style="margin-top:14px;" class="how-text">Splits array into halves recursively → merges sorted halves.
+            Merging checks left element first on ties — preserving original order.</div>
+        </div>
+        <div class="content-panel">
+          <div class="panel-label">🌍 Real-World Example</div>
+          <div class="example-title-row">🏆 Leaderboard: score + timestamp</div>
+          <div class="pb"><b>PROBLEM</b><br />Players have <code>(score, timestamp)</code>. Sort by score, but ties must
+            keep earliest-first order.</div>
+          <div class="sb"><b>SOLUTION</b><br />Stable sort preserves timestamp order from the first pass. Merge Sort
+            checks left first on equal scores — ties never scramble. Quicksort (unstable) would break this.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ 5. QUICKSORT ══════════ -->
+    <section class="algo-section" id="algo-5">
+      <div class="hero">
+        <img class="hero-img" src="algo5.png" alt="Quicksort" />
+        <div class="ore-badge">🟣 SORTING</div>
+        <div class="hero-overlay">
+          <div class="algo-num">ALGORITHM 05</div>
+          <h2 class="algo-title">Quicksort</h2>
+          <p class="algo-tagline">Pivot, partition, conquer. Fastest in practice thanks to cache locality.</p>
+        </div>
+
+      </div>
+      <div class="algo-content" id="algo-5-content">
+        <div class="content-panel">
+          <div class="panel-label">⚙ Analysis</div>
+          <div class="stats-row">
+            <div class="stat-chip">
+              <div class="label">Type</div>
+              <div class="val">Sorting</div>
+            </div>
+            <div class="stat-chip">
+              <div class="label">Space</div>
+              <div class="val">\(O(\log n)\)</div>
+            </div>
+            <div class="stat-chip">
+              <div class="label">Avg Time</div>
+              <div class="val">\(O(n \log n)\)</div>
+            </div>
+            <div class="stat-chip">
+              <div class="label">Worst Time</div>
+              <div class="val">\(O(n^2)\) rare</div>
+            </div>
+          </div>
+          <div style="margin-top:14px;" class="how-text">Pick a <strong>pivot</strong>. Partition: &lt;pivot left,
+            &gt;pivot right. Recurse on sub-arrays. In-place. Extremely fast due to CPU cache locality.</div>
+        </div>
+        <div class="content-panel">
+          <div class="panel-label">🌍 Real-World Example</div>
+          <div class="example-title-row">📚 Library bookshelf by Dewey Decimal</div>
+          <div class="pb"><b>PROBLEM</b><br />10,000 random books. Sort by call number quickly with minimal physical
+            moves.</div>
+          <div class="sb"><b>SOLUTION</b><br />Pick a pivot book (e.g., #500). Swap books &lt;500 left, &gt;500 right.
+            Repeat on each half. In-place = minimum moves. Far faster than bubble or insertion sort.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ 6. HEAPSORT ══════════ -->
+    <section class="algo-section" id="algo-6">
+      <div class="hero">
+        <img class="hero-img" src="algo6.jpg" alt="Heapsort" />
+        <div class="ore-badge">🔵 SORTING</div>
+        <div class="hero-overlay">
+          <div class="algo-num">ALGORITHM 06</div>
+          <h2 class="algo-title">Heapsort</h2>
+          <p class="algo-tagline">Max-heap powered. Guaranteed O(n log n) in ALL cases — no exceptions.</p>
+        </div>
+
+      </div>
+      <div class="algo-content" id="algo-6-content">
+        <div class="content-panel">
+          <div class="panel-label">⚙ Analysis</div>
+          <div class="key-prop">⚠ NOT STABLE · But worst-case guaranteed</div>
+          <div class="stats-row">
+            <div class="stat-chip">
+              <div class="label">Type</div>
+              <div class="val">Sorting</div>
+            </div>
+            <div class="stat-chip">
+              <div class="label">Space</div>
+              <div class="val">\(O(1)\) in-place</div>
+            </div>
+            <div class="stat-chip" style="flex:2">
+              <div class="label">Time (all cases)</div>
+              <div class="val">\(O(n \log n)\)</div>
+            </div>
+          </div>
+          <div style="margin-top:14px;" class="how-text">Build a max-heap (\(O(n)\) heapify). Repeatedly extract max to
+            array end. Unlike Quicksort — <strong>worst case is still \(O(n \log n)\)</strong>.</div>
+        </div>
+        <div class="content-panel">
+          <div class="panel-label">🌍 Real-World Example</div>
+          <div class="example-title-row">🏥 Hospital ER triage queue</div>
+          <div class="pb"><b>PROBLEM</b><br />Patients arrive with priority 1–5 (1=critical). Doctors must always treat
+            the highest priority next. New patients keep arriving.</div>
+          <div class="sb"><b>SOLUTION</b><br />Heapify the initial patient list in \(O(n)\). Max (highest priority) is
+            always at root. New arrivals insert in \(O(\log n)\). This IS a live priority queue — Heapsort demonstrates
+            its structure.</div>
+        </div>
+      </div>
+    </section>
+
+    <footer>⛏ Algorithm Encyclopedia — Minecraft Edition &nbsp;|&nbsp; 6 Algorithms &nbsp;|&nbsp; Complexity &amp;
+      Real-World Examples</footer>
+  </div>
+</body>
+
+</html>
