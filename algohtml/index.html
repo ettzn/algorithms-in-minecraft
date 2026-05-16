@@ -424,7 +424,7 @@
         <div class="hero-overlay">
           <div class="algo-num">ALGORITHM 01</div>
           <h2 class="algo-title">Interpolation Search</h2>
-          <p class="algo-tagline">Estimates where the target lives — like guessing a page in a phone book.</p>
+          <p class="algo-tagline">Estimates where the target lives, like guessing a page in a phone book.</p>
         </div>
 
       </div>
@@ -459,7 +459,7 @@
           <div class="panel-label">🌍 Real-World Example</div>
           <div class="example-title-row">📖 Finding a word in a dictionary</div>
           <div class="pb"><b>PROBLEM</b><br />1,000-page dictionary. Find "butterfly." You skip to page ~50 because 'B'
-            is early — not page 500.</div>
+            is early, not page 500.</div>
           <div class="sb"><b>SOLUTION</b><br />The algorithm interpolates a likely page from value distribution.
             Recalculates on sub-ranges. Much faster than binary search for uniform data.</div>
         </div>
@@ -508,7 +508,7 @@
           <div class="pb"><b>PROBLEM</b><br />Complex labyrinth, many dead-ends. No map. Must find exit without
             revisiting corridors.</div>
           <div class="sb"><b>SOLUTION</b><br />Pick a direction, go as deep as possible. Mark visited spots. Hit a
-            dead-end? Backtrack. Recursion handles this naturally — finds <em>a</em> path, not necessarily shortest.
+            dead-end? Backtrack. Recursion handles this naturally, finds <em>a</em> path, not necessarily shortest.
           </div>
         </div>
       </div>
@@ -556,7 +556,7 @@
           <div class="pb"><b>PROBLEM</b><br />One Station → Another Station. Fewest stops (not shortest distance). Which
             route?</div>
           <div class="sb"><b>SOLUTION</b><br />BFS from Starting Station: visit all 1-stop stations first, then 2-stop,
-            etc. The moment you hit Destination Station, that's the minimum — BFS guarantees it by expanding in layers.
+            etc. The moment you hit Destination Station, that's the minimum, BFS guarantees it by expanding in layers.
           </div>
         </div>
       </div>
@@ -593,7 +593,7 @@
             </div>
           </div>
           <div style="margin-top:14px;" class="how-text">Splits array into halves recursively → merges sorted halves.
-            Merging checks left element first on ties — preserving original order.</div>
+            Merging checks left element first on ties, preserving original order.</div>
         </div>
         <div class="content-panel">
           <div class="panel-label">🌍 Real-World Example</div>
@@ -601,7 +601,7 @@
           <div class="pb"><b>PROBLEM</b><br />Players have <code>(score, timestamp)</code>. Sort by score, but ties must
             keep earliest-first order.</div>
           <div class="sb"><b>SOLUTION</b><br />Stable sort preserves timestamp order from the first pass. Merge Sort
-            checks left first on equal scores — ties never scramble. Quicksort (unstable) would break this.</div>
+            checks left first on equal scores, ties never scramble. Quicksort (unstable) would break this.</div>
         </div>
       </div>
     </section>
@@ -639,8 +639,8 @@
               <div class="val">\(O(n^2)\) rare</div>
             </div>
           </div>
-          <div style="margin-top:14px;" class="how-text">Pick a <strong>pivot</strong>. Partition: &lt;pivot left,
-            &gt;pivot right. Recurse on sub-arrays. In-place. Extremely fast due to CPU cache locality.</div>
+          <div style="margin-top:14px;" class="how-text">Pick a <strong>pivot</strong>. Partition: pivot left,
+            pivot right. Recurse on sub-arrays. In-place. Extremely fast due to CPU cache locality.</div>
         </div>
         <div class="content-panel">
           <div class="panel-label">🌍 Real-World Example</div>
@@ -661,7 +661,7 @@
         <div class="hero-overlay">
           <div class="algo-num">ALGORITHM 06</div>
           <h2 class="algo-title">Heapsort</h2>
-          <p class="algo-tagline">Max-heap powered. Guaranteed O(n log n) in ALL cases — no exceptions.</p>
+          <p class="algo-tagline">Max-heap powered. Guaranteed O(n log n) in ALL cases, no exceptions.</p>
         </div>
 
       </div>
@@ -684,7 +684,7 @@
             </div>
           </div>
           <div style="margin-top:14px;" class="how-text">Build a max-heap (\(O(n)\) heapify). Repeatedly extract max to
-            array end. Unlike Quicksort — <strong>worst case is still \(O(n \log n)\)</strong>.</div>
+            array end. Unlike Quicksort, <strong>worst case is still \(O(n \log n)\)</strong>.</div>
         </div>
         <div class="content-panel">
           <div class="panel-label">🌍 Real-World Example</div>
@@ -692,7 +692,7 @@
           <div class="pb"><b>PROBLEM</b><br />Patients arrive with priority 1–5 (1=critical). Doctors must always treat
             the highest priority next. New patients keep arriving.</div>
           <div class="sb"><b>SOLUTION</b><br />Heapify the initial patient list in \(O(n)\). Max (highest priority) is
-            always at root. New arrivals insert in \(O(\log n)\). This IS a live priority queue — Heapsort demonstrates
+            always at root. New arrivals insert in \(O(\log n)\). This IS a live priority queue, Heapsort demonstrates
             its structure.</div>
         </div>
       </div>
